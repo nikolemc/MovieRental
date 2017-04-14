@@ -85,6 +85,26 @@ namespace MovieRental.Controllers
                 return View(newCustomer);
             }
         }
+
+        [HttpGet]
+        public ActionResult Delete(int Id)
+        {
+            var customer = new CustomerServices().GetCustomer(Id);
+            return View(customer);
+        }
+
+        [HttpPost] 
+        public ActionResult Delete(int Id, FormCollection collection)
+        {
+            var Name = collection["Name"];
+            var GenreId = collection["Email"];
+            var YearReleased = collection["PhoneNumber"];
+
+            new CustomerServices().DeleteCustomer(Id);
+            return RedirectToAction("Index");
+
+
+        }
     }
 
 

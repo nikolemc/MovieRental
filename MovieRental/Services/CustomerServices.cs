@@ -48,7 +48,7 @@ namespace MovieRental.Services
                 connection.Open();
                 sqlCommand.ExecuteNonQuery();
                 connection.Close();
-                
+
             }
 
         }
@@ -99,6 +99,26 @@ namespace MovieRental.Services
             }
             return rv;
 
+        }
+
+        public Customers DeleteCustomer(int id)
+        {
+            var rv = new Customers();
+            using (var connection = new SqlConnection(connectionString))
+            {
+                
+                //Delete Customer
+                var updatedCustomer = @"DELETE FROM CustomerTable WHERE @Id = Id;";
+
+                var sqlCommand2 = new SqlCommand(updatedCustomer, connection);
+                sqlCommand2.Parameters.AddWithValue("@Id", id);
+
+                connection.Open();
+                var reader = sqlCommand2.ExecuteNonQuery();
+                connection.Close();
+
+            }
+            return rv;
         }
     }
 }

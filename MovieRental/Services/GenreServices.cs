@@ -92,6 +92,25 @@ namespace MovieRental.Services
             return rv;
 
         }
+        public Genres DeleteGenre(int id)
+        {
+            var rv = new Genres();
+            using (var connection = new SqlConnection(connectionString))
+            {
+
+                //Delete Genre
+                var updatedGenre = @"DELETE FROM GenreTable WHERE @Id = Id;";
+
+                var sqlCommand2 = new SqlCommand(updatedGenre, connection);
+                sqlCommand2.Parameters.AddWithValue("@Id", id);
+
+                connection.Open();
+                var reader = sqlCommand2.ExecuteNonQuery();
+                connection.Close();
+
+            }
+            return rv;
+        }
 
     }
 }

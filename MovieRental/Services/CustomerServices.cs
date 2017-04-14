@@ -52,5 +52,53 @@ namespace MovieRental.Services
             }
 
         }
+
+        public void UpdateCustomer(Customers revisedCustomer)
+        {
+            using (var connection = new SqlConnection(connectionString))
+            {
+
+                var updateCustomer = @"UPDATE [dbo].[CustomerTable] SET [Name] = @Name
+                                                         ,[Email] = @Email
+                                                         ,[PhoneNumber] = @PhoneNumber
+                                                          WHERE Id = @Id";
+
+                var sqlCommand = new SqlCommand(updateCustomer, connection);
+
+                sqlCommand.Parameters.AddWithValue("@Id", revisedCustomer.Id);
+                sqlCommand.Parameters.AddWithValue("@Name", revisedCustomer.Name);
+                sqlCommand.Parameters.AddWithValue("@Email", revisedCustomer.Email);
+                sqlCommand.Parameters.AddWithValue("@PhoneNumber", revisedCustomer.PhoneNumber);
+
+                connection.Open();
+                sqlCommand.ExecuteNonQuery();
+                connection.Close();
+            }
+
+        }
+
+        public Customers GetCustomer(int id)
+        {
+            var rv = new Customers();
+            using (var connection = new SqlConnection(connectionString))
+            {
+
+                var updatedCustomer = @"SELECT * FROM CustomerTable WHERE @Id = Id;";
+
+                var sqlCommand = new SqlCommand(updatedCustomer, connection);
+                sqlCommand.Parameters.AddWithValue("@Id", id);
+
+                connection.Open();
+                var reader = sqlCommand.ExecuteReader();
+                while (reader.Read())
+                {
+                    rv = new Customers(reader);
+                }
+                connection.Close();
+
+            }
+            return rv;
+
+        }
     }
 }

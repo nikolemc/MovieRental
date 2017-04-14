@@ -52,6 +52,39 @@ namespace MovieRental.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpGet]
+        public ActionResult Edit(int Id)
+        {
+            var customer = new CustomerServices().GetCustomer(Id);
+            return View(customer);
+        }
+
+        [HttpPost] //edit the customer in the database
+        public ActionResult Edit(int Id, FormCollection collection)
+        {
+            
+            var Name = collection["Name"];
+            var Email = collection["Email"];
+            var PhoneNumber = collection["PhoneNumber"];
+            var newCustomer = new Customers 
+            {
+                Id = Id,
+                Name = Name,
+                Email = Email,
+                PhoneNumber = PhoneNumber,
+            };
+            
+            try
+            {
+                new CustomerServices().UpdateCustomer(newCustomer);
+                return RedirectToAction("Index");
+            }
+
+            catch
+            {
+                return View(newCustomer);
+            }
+        }
     }
 
 

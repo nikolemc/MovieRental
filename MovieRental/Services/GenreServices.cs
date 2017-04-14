@@ -50,6 +50,48 @@ namespace MovieRental.Services
 
         }
 
+        public void UpdateGenre(Genres revisedGenre)
+        {
+            using (var connection = new SqlConnection(connectionString))
+            {
+
+                var updateCustomer = @"UPDATE [dbo].[GenreTable] SET [Genre] = @Genre WHERE Id = @Id";
+
+                var sqlCommand = new SqlCommand(updateCustomer, connection);
+
+                sqlCommand.Parameters.AddWithValue("@Id", revisedGenre.Id);
+                sqlCommand.Parameters.AddWithValue("@Genre", revisedGenre.Genre);
+
+                connection.Open();
+                sqlCommand.ExecuteNonQuery();
+                connection.Close();
+            }
+
+        }
+
+        public Genres GetGenre(int id)
+        {
+            var rv = new Genres();
+            using (var connection = new SqlConnection(connectionString))
+            {
+
+                var updatedGenre = @"SELECT * FROM GenreTable WHERE @Id = Id;";
+
+                var sqlCommand = new SqlCommand(updatedGenre, connection);
+                sqlCommand.Parameters.AddWithValue("@Id", id);
+
+                connection.Open();
+                var reader = sqlCommand.ExecuteReader();
+                while (reader.Read())
+                {
+                    rv = new Genres(reader);
+                }
+                connection.Close();
+
+            }
+            return rv;
+
+        }
 
     }
 }

@@ -46,6 +46,36 @@ namespace MovieRental.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpGet]
+        public ActionResult Edit(int Id)
+        {
+            var genre = new GenreServices().GetGenre(Id);
+            return View(genre);
+        }
+
+        [HttpPost] //edit the genre in the database
+        public ActionResult Edit(int Id, FormCollection collection)
+        {
+
+            var Genre = collection["Genre"];
+            var newGenre = new Genres
+            {
+                Id = Id,
+                Genre = Genre,
+            };
+
+            try
+            {
+                new GenreServices().UpdateGenre(newGenre);
+                return RedirectToAction("Index");
+            }
+
+            catch
+            {
+                return View(newGenre);
+            }
+        }
+
     }
 
 

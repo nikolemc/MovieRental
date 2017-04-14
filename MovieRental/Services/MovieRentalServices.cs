@@ -80,11 +80,11 @@ namespace MovieRental.Services
         {
             using (var connection = new SqlConnection(connectionString))
             {
-                
+
                 var updateMovie = @"UPDATE [dbo].[MovieTable] SET [Name] = @Name
+                                                         ,[Director] = @Director
                                                          ,[GenreId] = @GenreId
                                                          ,[YearReleased] = @YearReleased
-                                                         ,[Director] = @Director
                                                          ,[IsCheckedOut] = @IsCheckedOut
                                                           WHERE Id = @Id";
 
@@ -98,9 +98,9 @@ namespace MovieRental.Services
                 sqlCommand.Parameters.AddWithValue("@IsCheckedOut", revisedMovie.IsCheckedOut);
 
                 connection.Open();
-                sqlCommand.ExecuteNonQuery(); 
+                sqlCommand.ExecuteNonQuery();
                 connection.Close();
-                
+
             }
 
         }
@@ -123,10 +123,10 @@ namespace MovieRental.Services
                     rv = new Movies(reader);
                 }
                 connection.Close();
-                
+
             }
             return rv;
-            
+
         }
 
         public Movies DeleteMovie(int id)
@@ -134,23 +134,32 @@ namespace MovieRental.Services
             var rv = new Movies();
             using (var connection = new SqlConnection(connectionString))
             {
+                //need to delete rental log
+                var updatedMovieLog = @"DELETE FROM RentalLogTable WHERE @Id = MovieId;";
 
-                var updatedMovie = @"DELETE FROM MovieTable WHERE @Id = Id;";
-
-                var sqlCommand = new SqlCommand(updatedMovie, connection);
+                var sqlCommand = new SqlCommand(updatedMovieLog, connection);
                 sqlCommand.Parameters.AddWithValue("@Id", id);
 
                 connection.Open();
-                var reader = sqlCommand.ExecuteReader();
-                while (reader.Read())
-                {
-                    rv = new Movies(reader);
-                }
+                var reader = sqlCommand.ExecuteNonQuery();
+
+
+                //then I can delete the movie
+                var updatedMovie = @"DELETE FROM MovieTable WHERE @Id = Id;";
+
+                var sqlCommand2 = new SqlCommand(updatedMovie, connection);
+                sqlCommand2.Parameters.AddWithValue("@Id", id);
+
+                sqlCommand2.ExecuteNonQuery();
                 connection.Close();
 
             }
             return rv;
+
+
         }
 
     }
+
 }
+

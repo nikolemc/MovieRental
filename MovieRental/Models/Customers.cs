@@ -11,7 +11,7 @@ namespace MovieRental.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
-        public int PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; }
 
         public Customers() { }
         public Customers(SqlDataReader reader)
@@ -19,8 +19,7 @@ namespace MovieRental.Models
             this.Id = (int)reader["Id"];
             this.Name = reader["Name"]?.ToString();
             this.Email = reader["Email"]?.ToString();
-            this.PhoneNumber = (int)reader["PhoneNumber"];
-            
+            this.PhoneNumber = reader["PhoneNumber"]?.ToString(); ;           
 
         }
     }

@@ -8,27 +8,18 @@
 <h6>You are currently logged in as Administrator</h6>
 
 <p>
-   
-    @Html.ActionLink("Add a new genre", "Create", "Genres", null, new { @class = "btn btn-primary btn-large" })
-    @Html.ActionLink("Remove a genre", "Delete", "Genres", null, new { @class = "btn btn-primary btn-large" })
-    @Html.ActionLink("Edit a genre", "Edit", "Genres", null, new { @class = "btn btn-primary btn-large" })
+    @Html.ActionLink("Genre", "Index", "Genres", null, new { @class = "btn btn-primary btn-large btn-admin" })
 
     
 </p>
   
 <p>
-    @Html.ActionLink("Add a new movie", "Create", "Movies", null, new { @class = "btn btn-primary btn-large" })
-    @Html.ActionLink("Remove a movie", "Delete", "Movies", null, new { @class = "btn btn-primary btn-large" })
-    @Html.ActionLink("Edit a movie", "Edit", "Movies", null, new { @class = "btn btn-primary btn-large" })
-    @Html.ActionLink("View all movies", "Index", "Movies", null, new { @class = "btn btn-primary btn-large" })
+    @Html.ActionLink("Movies", "Index", "Movies", null, new { @class = "btn btn-primary btn-large btn-admin" })
 </p>
 
 
 <p>
-
-    @Html.ActionLink("Add a new customer", "Create", "Customers", null, new { @class = "btn btn-primary btn-large" })
-    @Html.ActionLink("Delete a customer", "Delete", "Customers", null, new { @class = "btn btn-primary btn-large" })
-    @Html.ActionLink("Edit a customers details", "Edit", "Customers", null, new { @class = "btn btn-primary btn-large" })
+    @Html.ActionLink("Customers", "Index", "Customers", null, new { @class = "btn btn-primary btn-large btn-admin" })
    
 </p>
 

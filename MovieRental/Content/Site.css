@@ -26,3 +26,7 @@ textarea {
 .jumbotron {
     background-image: url("/Images/disney-bkgjpg.jpg");
 }
+
+.btn-admin{
+    width:10em;
+}

@@ -11,6 +11,7 @@ namespace MovieRental.Services
     public class MovieRentalServices
     {
         const string connectionString = @"Server=localhost\SQLEXPRESS;Database=MovieRentalData;Trusted_Connection=True;";
+
         public List<Movies> GetAllMovies()
         {
             var rv = new List<Movies>();
@@ -48,5 +49,108 @@ namespace MovieRental.Services
             return rv;
 
         }
+
+        public void AddMovie(Movies movie)
+        {
+            using (var connection = new SqlConnection(connectionString))
+            {
+
+                var newmovie = @"INSERT INTO MovieTable (Name, GenreId, Director, YearReleased, IsCheckedOut)" +
+                "Values (@Name, @GenreId, @Director, @YearReleased, @IsCheckedOut)";
+
+                var sqlCommand = new SqlCommand(newmovie, connection);
+
+                sqlCommand.Parameters.AddWithValue("@Name", movie.Name);
+                sqlCommand.Parameters.AddWithValue("@GenreId", movie.GenreId);
+                sqlCommand.Parameters.AddWithValue("@Director", movie.Director);
+                sqlCommand.Parameters.AddWithValue("@YearReleased", movie.YearReleased);
+                sqlCommand.Parameters.AddWithValue("@IsCheckedOut", movie.IsCheckedOut);
+
+                connection.Open();
+                sqlCommand.ExecuteNonQuery();
+                connection.Close();
+
+
+            }
+
+
+        }
+
+        public void UpdateMovie(Movies revisedMovie)
+        {
+            using (var connection = new SqlConnection(connectionString))
+            {
+                
+                var updateMovie = @"UPDATE [dbo].[MovieTable] SET [Name] = @Name
+                                                         ,[GenreId] = @GenreId
+                                                         ,[YearReleased] = @YearReleased
+                                                         ,[Director] = @Director
+                                                         ,[IsCheckedOut] = @IsCheckedOut
+                                                          WHERE Id = @Id";
+
+                var sqlCommand = new SqlCommand(updateMovie, connection);
+
+                sqlCommand.Parameters.AddWithValue("@Id", revisedMovie.Id);
+                sqlCommand.Parameters.AddWithValue("@Name", revisedMovie.Name);
+                sqlCommand.Parameters.AddWithValue("@Director", revisedMovie.Director);
+                sqlCommand.Parameters.AddWithValue("@GenreId", revisedMovie.GenreId);
+                sqlCommand.Parameters.AddWithValue("@YearReleased", revisedMovie.YearReleased);
+                sqlCommand.Parameters.AddWithValue("@IsCheckedOut", revisedMovie.IsCheckedOut);
+
+                connection.Open();
+                sqlCommand.ExecuteNonQuery(); 
+                connection.Close();
+                
+            }
+
+        }
+
+        public Movies GetMovie(int id)
+        {
+            var rv = new Movies();
+            using (var connection = new SqlConnection(connectionString))
+            {
+
+                var updatedMovie = @"SELECT * FROM MovieTable WHERE @Id = Id;";
+
+                var sqlCommand = new SqlCommand(updatedMovie, connection);
+                sqlCommand.Parameters.AddWithValue("@Id", id);
+
+                connection.Open();
+                var reader = sqlCommand.ExecuteReader();
+                while (reader.Read())
+                {
+                    rv = new Movies(reader);
+                }
+                connection.Close();
+                
+            }
+            return rv;
+            
+        }
+
+        public Movies DeleteMovie(int id)
+        {
+            var rv = new Movies();
+            using (var connection = new SqlConnection(connectionString))
+            {
+
+                var updatedMovie = @"DELETE FROM MovieTable WHERE @Id = Id;";
+
+                var sqlCommand = new SqlCommand(updatedMovie, connection);
+                sqlCommand.Parameters.AddWithValue("@Id", id);
+
+                connection.Open();
+                var reader = sqlCommand.ExecuteReader();
+                while (reader.Read())
+                {
+                    rv = new Movies(reader);
+                }
+                connection.Close();
+
+            }
+            return rv;
+        }
+
     }
 }

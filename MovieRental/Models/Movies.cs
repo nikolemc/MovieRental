@@ -10,6 +10,7 @@ namespace MovieRental.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public string Director { get; set; }
         public int GenreId { get; set; }
         public int YearReleased { get; set; }
         public bool? IsCheckedOut { get; set; } = false;
@@ -19,6 +20,7 @@ namespace MovieRental.Models
         {
             this.Id = (int)reader["Id"];
             this.Name = reader["Name"]?.ToString();
+            this.Director = reader["Director"]?.ToString();
             this.GenreId = (int)reader["GenreId"];
             this.YearReleased = (int)reader["YearReleased"];
             this.IsCheckedOut = (bool?)reader["IsCheckedOut"];

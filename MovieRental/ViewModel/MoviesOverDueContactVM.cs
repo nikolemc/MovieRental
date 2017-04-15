@@ -7,6 +7,7 @@ using System.Web;
 
 namespace MovieRental.ViewModel
 {
+
     public class MoviesOverDueContactVM
     {
 
@@ -18,6 +19,39 @@ namespace MovieRental.ViewModel
         public string Customer_Email { get; set; }
         public string PhoneNumber { get; set; }
 
+
+        public string Due_Date
+        {
+            get
+            {
+                if (DueDate.HasValue)
+                {
+                    return ((DateTime)this.DueDate).ToShortDateString();
+
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+
+        public string Date_Checked_Out
+        {
+            get
+            {
+                if (DateCheckedOut.HasValue)
+                {
+                    return ((DateTime)this.DateCheckedOut).ToShortDateString();
+
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+
         public MoviesOverDueContactVM() { }
         public MoviesOverDueContactVM(SqlDataReader reader)
         {
@@ -26,8 +60,11 @@ namespace MovieRental.ViewModel
             this.DueDate = (DateTime)reader["DueDate"];
             this.Movie_Name = reader["Movie_Name"]?.ToString();
             this.Customer_Name = reader["Customer_Name"]?.ToString();
+            this.Customer_Email = reader["Customer_Email"]?.ToString();
             this.PhoneNumber = reader["PhoneNumber"]?.ToString();
 
         }
+
+       
     }
 }

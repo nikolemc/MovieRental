@@ -42,7 +42,7 @@ namespace MovieRental.Services
                             " FROM dbo.RentalLogTable as r1" +
                             " LEFT JOIN dbo.MovieTable m1 on r1.MovieID = m1.Id" +
                             " LEFT JOIN dbo.CustomerTable c1 on r1.CustomerID = c1.Id" +
-                            " WHERE r1.DueDate < getdate(); ";
+                            " WHERE r1.DueDate < getdate()";
                 var cmd = new SqlCommand(query, connection);
                 connection.Open();
                 var reader = cmd.ExecuteReader();
@@ -55,5 +55,7 @@ namespace MovieRental.Services
             return rv;
 
         }
+
+
     }
 }

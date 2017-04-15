@@ -4,18 +4,16 @@
     ViewBag.Title = "IndexContact";
 }
 
-<h2>IndexContact</h2>
+<h2>Over Due Movies and Customer Contact Information</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.DateCheckedOut)
+            @Html.DisplayNameFor(model => model.Date_Checked_Out)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.DueDate)
+            @Html.DisplayNameFor(model => model.Due_Date)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Movie_Name)
@@ -35,10 +33,10 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.DateCheckedOut)
+            @Html.DisplayFor(modelItem => item.Date_Checked_Out)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.DueDate)
+            @Html.DisplayFor(modelItem => item.Due_Date)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Movie_Name)

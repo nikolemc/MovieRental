@@ -7,7 +7,7 @@ using System.Web;
 
 namespace MovieRental.Models
 {
-    public class RentalLogs
+    public class RentalRecords
     {
         public int Id { get; set; }
         public int CustomerId { get; set; }
@@ -15,8 +15,8 @@ namespace MovieRental.Models
         public DateTime? DateCheckedOut { get; set; }
         public DateTime? DueDate { get; set; }
 
-        public RentalLogs() { }
-        public RentalLogs(SqlDataReader reader)
+        public RentalRecords() { }
+        public RentalRecords(SqlDataReader reader)
         {
             this.Id = (int)reader["Id"];
             this.CustomerId = (int)reader["CustomerId"];

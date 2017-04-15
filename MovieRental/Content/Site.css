@@ -28,5 +28,6 @@ textarea {
 }
 
 .btn-admin{
-    width:10em;
+    width:25em;
+    min-width:25em;
 }

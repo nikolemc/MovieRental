@@ -21,6 +21,16 @@ namespace MovieRental.Controllers
 
         }
 
+        public ActionResult IndexCheckedOut()
+        {
+
+            // get all movies
+            var movies = new MovieRentalServices().CheckedOutMovies();
+            // pass them to the view
+            // return View("IndexCheckedOut", movies);
+            return View(movies.Where(x => x.IsCheckedOut == true)); //this is my SQL statement for only showing
+        }
+
 
         [HttpGet]
         public ActionResult Create()

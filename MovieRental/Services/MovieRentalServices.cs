@@ -50,6 +50,25 @@ namespace MovieRental.Services
 
         }
 
+        public List<CheckedOutMoviesVM> CheckedOutMovies()
+        {
+            var rv = new List<CheckedOutMoviesVM>();
+            using (var connection = new SqlConnection(connectionString))
+            {
+                var query = "SELECT [MovieTable].[Id],[Name],[YearReleased],[Director], [GENRE], [IsCheckedOut] FROM [MovieTable] JOIN GenreTable ON MovieTable.Id = GenreTable.Id";
+                var cmd = new SqlCommand(query, connection);
+                connection.Open();
+                var reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    rv.Add(new CheckedOutMoviesVM(reader));
+                }
+                connection.Close();
+            }
+            return rv;
+
+        }
+
         public void AddMovie(Movies movie)
         {
             using (var connection = new SqlConnection(connectionString))
@@ -159,7 +178,25 @@ namespace MovieRental.Services
 
         }
 
+        public static void MovieCheckOutStatus(int id)
+        {
+            using (var connection = new SqlConnection(connectionString))
+            {
+                var openGift = @"UPDATE MovieTable SET IsCheckedOut = @IsOpened WHERE @Id = Id";
+                var cmd = new SqlCommand(openGift, connection);
+                cmd.Parameters.AddWithValue("@IsCheckedOut", true);
+                cmd.Parameters.AddWithValue("@Id", id);
+
+                connection.Open();
+                var reader = cmd.ExecuteNonQuery();
+                connection.Close();
+            }
+
+        }
+
+
+
+
     }
 
 }
-

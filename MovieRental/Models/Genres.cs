@@ -8,15 +8,18 @@ namespace MovieRental.Models
 {
     public class Genres
     {
-        public int Id { get; set; }
-        public string Genre { get; set; }
-
+       
         public Genres() { }
+
         public Genres(SqlDataReader reader)
         {
             this.Id = (int)reader["Id"];
             this.Genre = reader["Genre"]?.ToString();
 
         }
+
+        public int Id { get; set; }
+        public string Genre { get; set; }
     }
+
 }

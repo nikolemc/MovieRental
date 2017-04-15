@@ -56,6 +56,31 @@ namespace MovieRental.Services
 
         }
 
+        public void AddRentalRecords(RentalRecords RentalRecord)
+        {
+            using (var connection = new SqlConnection(connectionString))
+            {
+
+                var newRentalRecord = @"INSERT INTO RentalLogTable (CustomerId, MovieId, DateCheckedOut, DueDate)" +
+                "Values (@CustomerId, @MovieId, @DateCheckedOut, @DueDate)";
+
+                var sqlCommand = new SqlCommand(newRentalRecord, connection);
+
+                sqlCommand.Parameters.AddWithValue("@CustomerId", RentalRecord.CustomerId);
+                sqlCommand.Parameters.AddWithValue("@MovieId", RentalRecord.MovieId);
+                sqlCommand.Parameters.AddWithValue("@DateCheckedOut", RentalRecord.DateCheckedOut);
+                sqlCommand.Parameters.AddWithValue("@DueDate", RentalRecord.DueDate);
+
+                connection.Open();
+                sqlCommand.ExecuteNonQuery();
+                connection.Close();
+
+
+            }
+
+
+        }
+
 
     }
 }

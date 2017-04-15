@@ -4,7 +4,10 @@
     ViewBag.Title = "IndexCheckedOut";
 }
 
+
 <h2>Movies that are currently checked out</h2>
+
+
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -51,6 +54,8 @@
             @Html.ActionLink("Delete", "Delete", new { id=item.Id })
         </td>
     </tr>
+
 }
 
 </table>
+

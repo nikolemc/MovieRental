@@ -13,7 +13,7 @@ namespace MovieRental.ViewModel
         public string Director { get; set; }
         public string Genre { get; set; }
         public int YearReleased { get; set; }
-        public bool? IsCheckedOut { get; set; } = false;
+        public bool? IsCheckedOut { get; set; }
 
         public CheckedOutMoviesVM() { }
         public CheckedOutMoviesVM(SqlDataReader reader)
@@ -28,4 +28,6 @@ namespace MovieRental.ViewModel
         }
 
     }
+
+
 }
